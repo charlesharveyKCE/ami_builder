@@ -6,6 +6,7 @@
 
     "builders": [{
         "type": "amazon-ebs",
+        "user_data_file": "./scripts/setup_winrm.ps1",
         "region": "{{user `aws_region`}}",
         "instance_type": "t2.micro",
         "winrm_username": "ec2-user",
