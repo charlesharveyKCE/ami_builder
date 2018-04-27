@@ -5,11 +5,11 @@
     },
 
     "builders": [{
-        "type": "amazon-windows-ebs",
+        "type": "amazon-ebs",
         "user_data_file": "./scripts/setup_winrm.ps1",
         "region": "{{user `aws_region`}}",
         "instance_type": "t2.micro",
-        "winrm_username": "ec2-user",
+        "winrm_username": "Administrator",
         "ami_name": "{{user `aws_ami_name`}}",
         "ami_description": "Customized Windows",
         "associate_public_ip_address": "true",
