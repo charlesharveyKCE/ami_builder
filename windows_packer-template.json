@@ -1,7 +1,7 @@
 {
     "variables": {
         "aws_region": "{{env `AWS_REGION`}}",
-        "aws_ami_name": "amazon-windows_{{isotime \"02Jan2006\"}}"
+        "aws_ami_name": "packer {{isotime \"2006_01_02_03_04_05\"}}"
     },
 
     "builders": [{
@@ -11,8 +11,7 @@
         "instance_type": "t2.micro",
         "winrm_username": "Administrator",
         "ami_name": "{{user `aws_ami_name`}}",
-        "ami_description": "Customized Windows",
-        
+        "ami_description": "KinderCare Windows Build: {{isotime \"2006/01/02:03:04:05\"}} ",
         "communicator":"winrm",
         "winrm_use_ssl": true,
         "winrm_insecure": true,
