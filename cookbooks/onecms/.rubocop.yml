@@ -1,0 +1,25 @@
+Layout/IndentationWidth:
+  # Number of spaces for each indentation level.
+  Width: 2
+ 
+SpaceAfterColon:
+  Enabled: true
+
+SpaceAfterComma:
+  Enabled: true
+
+SpaceAroundBlockBraces:
+  Enabled: true
+
+SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+
+SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+SpaceInsideParens:
+  Enabled: true
+
+
+EmptyLines:
+  Enabled: true
