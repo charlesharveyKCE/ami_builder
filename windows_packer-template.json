@@ -22,7 +22,7 @@
     "provisioners": [
         {
             "type": "chef-solo",
-            "cookbook_paths": ["cookbooks"],
+            "cookbook_paths": ["./cookbooks"],
             "guest_os_type" : "windows",
             "run_list" : ["onecms::win_ext_web_configure"]
           }
