@@ -29,13 +29,10 @@
         "cookbook_paths": [
             "cookbooks"
             ],
-        "remote_cookbook_paths": [
-            "c:/windows/temp/packer-chef-solo/cookbooks-0"
-            ],
         "guest_os_type": "windows",
-  
-        "run_list": ["recipe[onecms::win_ext_web_configure]"
-        ]
+        "run_list": [
+        	"recipe[onecms::win_ext_web_configure]"
+        	]
   
       }
     ]
