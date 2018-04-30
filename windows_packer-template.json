@@ -27,8 +27,7 @@
         "type": "chef-solo",
   
         "cookbook_paths": [
-            "cookbooks", 
-            "vendor/cookbooks"
+            "cookbooks"
             ],
         "remote_cookbook_paths": [
             "c:/windows/temp/packer-chef-solo/cookbooks-0",
