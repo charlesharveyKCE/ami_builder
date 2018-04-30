@@ -27,7 +27,8 @@
         "type": "chef-solo",
   
         "cookbook_paths": [
-            "cookbooks"
+            "cookbooks/onecms",
+            "cookbooks/windows"
             ],
         "guest_os_type": "windows",
         "run_list": [
