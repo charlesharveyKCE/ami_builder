@@ -24,6 +24,7 @@
             "type": "chef-solo",
             "guest_os_type" : "windows",
             "cookbook_paths" : ["chef/cookbooks"],
+            "roles_path" : "chef/roles",
             "run_list" : ["onecms::win_ext_web_configure"]
           }
 
