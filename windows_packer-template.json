@@ -20,13 +20,25 @@
     }],
 
     "provisioners": [
-        {
-            "type": "chef-solo",
-            "guest_os_type" : "windows",
-            "cookbook_paths" : ["./chef/cookbooks"],
-            "run_list" : ["recipe[onecms::win_ext_web_configure]"]
 
-          }
+        
+    {
 
+        "type": "chef-solo",
+  
+        "cookbook_paths": [
+            "cookbooks", 
+            "vendor/cookbooks"
+            ],
+        "remote_cookbook_paths": [
+            "c:/windows/temp/packer-chef-solo/cookbooks-0",
+            "c:/windows/temp/packer-chef-solo/cookbooks-1"
+            ],
+        "guest_os_type": "windows",
+  
+        "run_list": ["recipe[onecms::win_ext_web_configure]"
+        ]
+  
+      }
     ]
 }
