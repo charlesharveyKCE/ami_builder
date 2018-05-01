@@ -11,6 +11,7 @@ phases:
     commands:
       - curl -qL -o packer.zip https://releases.hashicorp.com/packer/1.2.3/packer_1.2.3_linux_amd64.zip && unzip packer.zip
       - curl -qL -o packer-plugin-windowsupdate.zip https://github.com/rgl/packer-provisioner-windows-update/releases/download/v0.5.1/packer-provisioner-windows-update-windows.zip 
+      - mkdir ~/.packer.d/plugins
       - unzip packer-plugin-windowsupdate.zip -d ~/.packer.d/plugins
       - curl -qL -o jq https://stedolan.github.io/jq/download/linux64/jq && chmod +x ./jq
       - ./packer validate windows_packer-template.json
