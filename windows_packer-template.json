@@ -32,7 +32,7 @@
             ],
         "guest_os_type": "windows",
         "run_list": [
-        	"recipe[onecms::win_ext_web_configure]"
+        	"onecms::win_ext_web_configure"
         	]
   
       }
