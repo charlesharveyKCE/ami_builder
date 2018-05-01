@@ -1,7 +1,6 @@
 {
     "variables": {
         "aws_region": "{{env `AWS_REGION`}}",
-        "aws_ami_name": "windows{{isotime \"2006_01_02_03_04_05\"}}",
         "role" : "win_int_web"
     },
 
@@ -11,8 +10,7 @@
         "region": "{{user `aws_region`}}",
         "instance_type": "t2.micro",
         "winrm_username": "Administrator",
-        "ami_name": "{{user `aws_ami_name`}}",
-        "ami_description": "windows_build:{{isotime \"2006/01/02:03:04:05\"}}",
+        "ami_name": "onecms_{{ user `role` }}_{{isotime \"2006_01_02_03_04_05\"}}",
         "associate_public_ip_address" : true,
         "communicator":"winrm",
         "winrm_use_ssl": true,
@@ -29,7 +27,6 @@
   
         "cookbook_paths": [
             "cookbooks"
-            
             ],
         "guest_os_type": "windows",
         "run_list": [
