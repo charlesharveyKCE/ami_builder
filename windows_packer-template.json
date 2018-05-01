@@ -24,6 +24,15 @@
         "cookbook_paths": ["cookbooks"],
         "guest_os_type": "windows",
         "run_list": ["onecms::{{ user `role` }}_configure"]
+    },
+    {
+        "type" : "powershell",
+        "inline" : ["$psversiontable"]
+    },
+
+    {
+        "type" : "powershell",
+        "script" : "./scripts/win_update.ps1"
     }
 
     ]
