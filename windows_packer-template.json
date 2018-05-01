@@ -24,7 +24,7 @@
         "cookbook_paths": ["cookbooks"],
         "guest_os_type": "windows",
         "run_list": ["onecms::{{ user `role` }}_configure"]
-    },
-    {"type" : "windows-update"}
+    }
+
     ]
 }
