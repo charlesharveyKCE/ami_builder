@@ -1,30 +1,50 @@
 {
     "variables": {
         "aws_region": "{{env `AWS_REGION`}}",
-        "role" : "win_int_web"
+        "role" : "onecms_int_web"
     },
-
     "builders": [{
         "type": "amazon-ebs",
         "user_data_file": "./scripts/setup_winrm.ps1",
         "region": "{{user `aws_region`}}",
         "instance_type": "t2.micro",
         "winrm_username": "Administrator",
-        "ami_name": "onecms_{{ user `role` }}_{{isotime \"2006_01_02_03_04_05\"}}",
+        "ami_name": "{{ user `role` }}_{{isotime \"2006_01_02_03_04_05\"}}",
         "associate_public_ip_address" : true,
         "communicator":"winrm",
         "winrm_use_ssl": true,
         "winrm_insecure": true,
         "source_ami" : "ami-f3dcbc8b"
     }],
-
     "provisioners": [
     {
         "type": "chef-solo",
         "cookbook_paths": ["cookbooks"],
+        "roles_path" : "roles",
         "guest_os_type": "windows",
-        "run_list": ["onecms::{{ user `role` }}_configure"]
-    }
+        "run_list": ["role[{{ user `role` }}]"]
+    },
+    {
+        "type" : "powershell",
+        "inline" : [
+                "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
+                "Install-Module pswindowsupdate -force",
+                "import-Module pswindowsupdate -force"
+        ],
+        "elevated_user": "Administrator",
+        "elevated_password": "{{.WinRMPassword}}"
+    },
+    {
+        "type" : "powershell",
+        "inline" : [
+            "If(!(test-path c:\\temp)){new-item -Path c:\\temp -ItemType Directory}",
+            "Get-WUList | Export-CSV -Path C:\\TEMP\\available_windows_updates.csv -NoTypeInformation -Force",
+            "get-content C:\\TEMP\\available_windows_updates.csv"
+        ],
+        "elevated_user": "Administrator",
+        "elevated_password": "{{.WinRMPassword}}"
+    },
+    {"type" : "windows-restart"}
 
     ]
 }
