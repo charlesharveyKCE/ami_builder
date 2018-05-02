@@ -42,7 +42,8 @@
         ],
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
-    }
+    },
+    {"type" : "windows-restart"}
 
     ]
 }
