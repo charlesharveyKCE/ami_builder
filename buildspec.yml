@@ -3,7 +3,7 @@ version: 0.2
 
 env:
   variables:
-    role: "win_ext_web"
+    role: "onecms_ext_web"
   
 
 phases:

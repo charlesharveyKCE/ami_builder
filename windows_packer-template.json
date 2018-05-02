@@ -1,7 +1,7 @@
 {
     "variables": {
         "aws_region": "{{env `AWS_REGION`}}",
-        "role" : "win_int_web"
+        "role" : "onecms_int_web"
     },
     "builders": [{
         "type": "amazon-ebs",
@@ -29,7 +29,7 @@
     {
         "type" : "powershell",
         "inline" : [
-                "Install-PackageProvider -Name Nuget -ForceBootstrap",
+                "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
                 "Install-Module pswindowsupdate -force"
         ],
         "elevated_user": "Administrator",
