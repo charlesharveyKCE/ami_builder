@@ -37,7 +37,7 @@
     {
         "type" : "powershell",
         "inline" : [
-            "If(!(test-path c:\temp)){new-item -Path c:\temp -ItemType Directory}",
+            "If(!(test-path c:\\temp)){new-item -Path c:\\temp -ItemType Directory}",
             "Get-WUList | Export-CSV -Path C:\\TEMP\\available_windows_updates.csv -NoTypeInformation -Force"
         ],
         "elevated_user": "Administrator",
