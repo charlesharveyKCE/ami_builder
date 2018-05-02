@@ -3,7 +3,6 @@
         "aws_region": "{{env `AWS_REGION`}}",
         "role" : "win_int_web"
     },
-
     "builders": [{
         "type": "amazon-ebs",
         "user_data_file": "./scripts/setup_winrm.ps1",
@@ -17,7 +16,6 @@
         "winrm_insecure": true,
         "source_ami" : "ami-f3dcbc8b"
     }],
-
     "provisioners": [
     {
         "type": "chef-solo",
@@ -31,13 +29,10 @@
         "type" : "powershell",
         "inline" : [
                 "Install-PackageProvider -Name Nuget -ForceBootstrap",
-                "Install-Module pswindowsupdate -force",
-                "Get-WUList"
-        
+                "Install-Module pswindowsupdate -force"
         ],
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
     }
-
     ]
 }
