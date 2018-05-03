@@ -38,13 +38,21 @@
         "type" : "powershell",
         "inline" : [
             "If(!(test-path c:\\temp)){new-item -Path c:\\temp -ItemType Directory}",
-            "Get-WUList | Export-CSV -Path C:\\TEMP\\available_windows_updates.csv -NoTypeInformation -Force",
+            "Get-WUList |Select KB | Export-CSV -Path C:\\TEMP\\available_windows_updates.csv -NoTypeInformation -Force",
             "get-content C:\\TEMP\\available_windows_updates.csv"
         ],
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
     },
-    {"type" : "windows-restart"}
-
+    {"type" : "windows-restart"},
+    {
+  "type": "powershell",
+  "inline": [
+    "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+    "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
+  ],
+        "elevated_user": "Administrator",
+        "elevated_password": "{{.WinRMPassword}}"
+}
     ]
 }
