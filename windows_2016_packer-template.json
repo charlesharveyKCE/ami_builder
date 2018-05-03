@@ -33,7 +33,14 @@
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
     },    
-        {
+    {
+        "type" : "powershell",
+        "inline" : ["Get-WindowsUpdate -acceptall -download -install -ignorereboot -verbose"],
+        "elevated_user": "Administrator",
+        "elevated_password": "{{.WinRMPassword}}"
+    },    
+    {"type" : "windows-restart"},
+    {
         "type": "chef-solo",
         "cookbook_paths": ["cookbooks"],
         "roles_path" : "roles",
@@ -51,7 +58,7 @@
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
     },
-    {"type" : "windows-restart"},
+
     {
   "type": "powershell",
   "inline": [
