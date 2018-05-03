@@ -17,12 +17,11 @@
         "source_ami" : "ami-f3dcbc8b"
     }],
     "provisioners": [
-    {
-        "type": "chef-solo",
-        "cookbook_paths": ["cookbooks"],
-        "roles_path" : "roles",
-        "guest_os_type": "windows",
-        "run_list": ["role[{{ user `role` }}]"]
+        {
+        "type" : "powershell",
+        "inline" : ["iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"],
+        "elevated_user": "Administrator",
+        "elevated_password": "{{.WinRMPassword}}"
     },
     {
         "type" : "powershell",
@@ -33,6 +32,13 @@
         ],
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
+    },
+    {
+        "type": "chef-solo",
+        "cookbook_paths": ["cookbooks"],
+        "roles_path" : "roles",
+        "guest_os_type": "windows",
+        "run_list": ["role[{{ user `role` }}]"]
     },
     {
         "type" : "powershell",
@@ -48,8 +54,12 @@
     {
   "type": "powershell",
   "inline": [
-    "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
-    "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
+    "$EC2SettingsFile='C:\\Program Files\\Amazon\\Ec2ConfigService\\Settings\\Config.xml'",
+    "$xml = [xml](get-content $EC2SettingsFile);$xmlElement = $xml.get_DocumentElement()",
+    "$xmlElementToModify = $xmlElement.Plugins",
+    "foreach ($element in $xmlElementToModify.Plugin)",
+    "{switch($element.name){'Ec2SetPassword'{$element.State='Enabled'};'Ec2SetComputerName'{$element.State='Enabled'};'Ec2HandleUserData'{$element.State='Enabled'}}}",
+    "$xml.Save($EC2SettingsFile)"
   ],
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
