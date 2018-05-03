@@ -47,18 +47,6 @@
         "guest_os_type": "windows",
         "run_list": ["role[{{ user `role` }}]"]
     },
-
-    {
-        "type" : "powershell",
-        "inline" : [
-            "If(!(test-path c:\\temp)){new-item -Path c:\\temp -ItemType Directory}",
-            "Get-WUList |Select KB | Export-CSV -Path C:\\TEMP\\available_windows_updates.csv -NoTypeInformation -Force",
-            "get-content C:\\TEMP\\available_windows_updates.csv"
-        ],
-        "elevated_user": "Administrator",
-        "elevated_password": "{{.WinRMPassword}}"
-    },
-
     {
   "type": "powershell",
   "inline": [
