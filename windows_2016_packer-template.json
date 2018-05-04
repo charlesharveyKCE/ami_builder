@@ -39,7 +39,8 @@
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
     },    
-    {"type" : "windows-restart"},
+    {"type" : "windows-restart",
+        "restart_timeout" : "60m"},
     {
         "type": "chef-solo",
         "cookbook_paths": ["cookbooks"],
