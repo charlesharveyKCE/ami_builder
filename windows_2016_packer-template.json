@@ -35,7 +35,7 @@
     },    
     {
         "type" : "powershell",
-        "inline" : ["Get-WindowsUpdate -acceptall -download -install -ignorereboot -verbose"],
+        "inline" : ["Get-WindowsUpdate -IgnoreRebootRequired -AcceptAll -Confirm:$False -Verbose"],
         "elevated_user": "Administrator",
         "elevated_password": "{{.WinRMPassword}}"
     },    
