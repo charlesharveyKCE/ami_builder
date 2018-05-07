@@ -35,8 +35,7 @@
             "inline": [
                 "Write-output 'Begin - Closing Image for EC2 Instance'",
                 "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
-                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown",
-                "Write-output 'End - Closing Image for EC2 Instance'"
+                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
                 ],
             "elevated_user": "Administrator",
             "elevated_password": "{{.WinRMPassword}}"
