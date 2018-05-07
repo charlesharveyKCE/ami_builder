@@ -18,13 +18,6 @@
     }],
     "provisioners": [
         {
-            "type": "chef-solo",
-            "cookbook_paths": ["cookbooks"],
-            "roles_path" : "roles",
-            "guest_os_type": "windows",
-            "run_list": ["role[{{ user `role` }}]"]
-        },
-        {
             "type" : "powershell",
             "inline" : [
                     "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
@@ -36,6 +29,14 @@
             "elevated_user": "Administrator",
             "elevated_password": "{{.WinRMPassword}}"
         },
+        {
+            "type": "chef-solo",
+            "cookbook_paths": ["cookbooks"],
+            "roles_path" : "roles",
+            "guest_os_type": "windows",
+            "run_list": ["role[{{ user `role` }}]"]
+        },
+
         {
             "type" : "windows-restart",
             "restart_timeout" : "60m",
