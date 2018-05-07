@@ -4,7 +4,12 @@ write-output "Running User Data Script"
 write-host "(host) Running User Data Script"
 
 Set-ExecutionPolicy Unrestricted -Scope LocalMachine -Force -ErrorAction Ignore
-
+Install-PackageProvider -Name Nuget -ForceBootstrap -force
+Install-Module -Name Chocolatey -force
+Install-ChocolateySoftware -Verbose -force
+Install-ChocolateyPackage -Name 'Powershell' -AcceptLicense -force
+Install-ChocolateyPackage -Name 'chocolatey-windowsupdate.extension' -AcceptLicense -force
+Import-Module $Env:ChocolateyInstall\helpers\chocolateyInstaller.psm1
 # Don't set this before Set-ExecutionPolicy as it throws an error
 $ErrorActionPreference = "stop"
 
