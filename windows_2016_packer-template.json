@@ -18,27 +18,6 @@
     }],
     "provisioners": [
         {
-            "type" : "powershell",
-            "inline" : [
-                    "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
-                    "Install-Module pswindowsupdate -force",
-                    "import-Module pswindowsupdate -force",
-                    "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
-            ],
-            "elevated_user": "Administrator",
-            "elevated_password": "{{.WinRMPassword}}"
-        },
-        {
-            "type" : "powershell",
-            "inline" : ["Get-WindowsUpdate -IgnoreRebootRequired -AcceptAll -Confirm:$False -Verbose"],
-            "elevated_user": "Administrator",
-            "elevated_password": "{{.WinRMPassword}}"
-        },    
-        {
-            "type" : "windows-restart",
-            "restart_timeout" : "60m"
-        },
-        {
             "type": "chef-solo",
             "cookbook_paths": ["cookbooks"],
             "roles_path" : "roles",
@@ -46,10 +25,29 @@
             "run_list": ["role[{{ user `role` }}]"]
         },
         {
+            "type" : "powershell",
+            "inline" : [
+                    "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
+                    "Install-Module pswindowsupdate -force",
+                    "import-Module pswindowsupdate -force",
+                    "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))",
+                    "Get-WindowsUpdate -IgnoreRebootRequired -AcceptAll -Confirm:$False -Verbose"
+            ],
+            "elevated_user": "Administrator",
+            "elevated_password": "{{.WinRMPassword}}"
+        },
+        {
+            "type" : "windows-restart",
+            "restart_timeout" : "60m",
+            "restart_check_command": "powershell -command \"& {Write-Output 'restarted after windows patching.'}\""
+        },
+        {
             "type": "powershell",
             "inline": [
+                "Write-output 'Begin - Closing Image for EC2 Instance'",
                 "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
-                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
+                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown",
+                "Write-output 'End - Closing Image for EC2 Instance'"
                 ],
             "elevated_user": "Administrator",
             "elevated_password": "{{.WinRMPassword}}"
