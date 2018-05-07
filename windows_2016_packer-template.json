@@ -30,8 +30,8 @@
                     "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
                     "Install-Module pswindowsupdate -force",
                     "import-Module pswindowsupdate -force",
-                    "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))",
-                    "Get-WindowsUpdate -IgnoreRebootRequired -AcceptAll -Confirm:$False -Verbose"
+                    "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
+                    
             ],
             "elevated_user": "Administrator",
             "elevated_password": "{{.WinRMPassword}}"
