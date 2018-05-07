@@ -1,0 +1,45 @@
+{
+    "variables": {
+        "aws_region": "{{env `AWS_REGION`}}",
+        "role" : "onecms_int_web"
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "user_data_file": "./scripts/setup_winrm.ps1",
+        "region": "{{user `aws_region`}}",
+        "instance_type": "t2.micro",
+        "winrm_username": "Administrator",
+        "ami_name": "{{ user `role` }}_{{isotime \"2006_01_02_03_04_05\"}}",
+        "associate_public_ip_address" : true,
+        "communicator":"winrm",
+        "winrm_use_ssl": true,
+        "winrm_insecure": true,
+        "source_ami" : "ami-f3dcbc8b"
+    }],
+    "provisioners": [
+        {
+            "type": "chef-solo",
+            "cookbook_paths": ["cookbooks"],
+            "roles_path" : "roles",
+            "guest_os_type": "windows",
+            "run_list": ["role[{{ user `role` }}]"]
+        },
+
+        {
+            "type" : "windows-restart",
+            "restart_timeout" : "60m",
+            "restart_check_command": "powershell -command \"& {Write-Output 'restarted after windows patching.'}\""
+        },
+        {
+            "type": "powershell",
+            "inline": [
+                "Write-output 'Begin - Closing Image for EC2 Instance'",
+                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown",
+                "Write-output 'End - Closing Image for EC2 Instance'"
+                ],
+            "elevated_user": "Administrator",
+            "elevated_password": "{{.WinRMPassword}}"
+        }
+  ]
+}
