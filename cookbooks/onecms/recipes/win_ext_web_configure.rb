@@ -12,6 +12,74 @@ windows_service 'W3SVC' do
   action :enable
 end
 
-template 'c:\inetpub\wwwroot\Default.htm' do
+# stop and delete the default site
+iis_site 'Default Web Site' do
+  action [:stop, :delete]
+end
+
+directory "#{node['iis']['docroot']}/CDN-Prod-web" do
+  action :create
+end
+
+iis_pool 'CDN-Prod-Web' do
+  runtime_version "2.0"
+  pipeline_mode :Classic
+  action :add
+end
+
+iis_site 'CDN-Prod-web' do
+  protocol :http
+  port 9050
+  path "#{node['iis']['docroot']}/CDN-Prod-web"
+  application_pool 'CDN-Prod-Web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/CDN-Prod-web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+
+iis_pool 'Login-Web' do
+  runtime_version "2.0"
+  pipeline_mode :Classic
+  action :add
+end
+
+directory "#{node['iis']['docroot']}/FCIL-Web" do
+  action :create
+end
+
+iis_site 'Login-Web' do
+  protocol :http
+  port 9130
+  path "#{node['iis']['docroot']}/FCIL-Web"
+  application_pool 'Login-Web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/FCIL-Web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+iis_pool 'ParentPortal-Prod-web' do
+  runtime_version "2.0"
+  pipeline_mode :Classic
+  action :add
+end
+
+directory "#{node['iis']['docroot']}/ParentPortal-Prod-web" do
+  action :create
+end
+
+iis_site 'ParentPortal-Pro' do
+  protocol :http
+  port 9030
+  path "#{node['iis']['docroot']}/ParentPortal-Prod-web"
+  application_pool ''
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/ParentPortal-Prod-web/Default.htm" do
   source 'default.htm.erb'
 end
