@@ -76,7 +76,7 @@ iis_site 'ParentPortal-Pro' do
   protocol :http
   port 9030
   path "#{node['iis']['docroot']}/ParentPortal-Prod-web"
-  application_pool ''
+  application_pool 'ParentPortal-Prod-web'
   action [:add,:start]
 end
 
