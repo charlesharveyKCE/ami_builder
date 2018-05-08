@@ -12,10 +12,6 @@ windows_service 'W3SVC' do
   action :enable
 end
 
-file 'c:\inetpub\wwwroot\Default.htm' do
-  content '<html>
-  <body>
-    <h1>Hello KinderCare - (win_int_web_svr_configure.rb)</h1>
-  </body>
-</html>'
+template 'c:\inetpub\wwwroot\Default.htm' do
+  source 'default.htm.erb'
 end
