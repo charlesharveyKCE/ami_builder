@@ -12,6 +12,139 @@ windows_service 'W3SVC' do
   action :enable
 end
 
-template 'c:\inetpub\wwwroot\Default.htm' do
+# stop and delete the default site
+iis_site 'Default Web Site' do
+  action [:stop, :delete]
+end
+
+directory "#{node['iis']['docroot']}/CDN-Prod-web" do
+  action :create
+end
+
+iis_pool 'CDN-Prod-Web' do
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
+end
+
+iis_site 'CDN-Prod-web' do
+  protocol :http
+  port 9050
+  path "#{node['iis']['docroot']}/CDN-Prod-web"
+  application_pool 'CDN-Prod-Web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/CDN-Prod-web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+directory "#{node['iis']['docroot']}/CMS-CSS-Web" do
+  action :create
+end
+
+iis_pool 'CMS-CSS-Web' do
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
+end
+
+iis_site 'CMS-CSS-Web' do
+  protocol :http
+  port 9060
+  path "#{node['iis']['docroot']}/CMS-CSS-Web"
+  application_pool 'CMS-CSS-Web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/CMS-CSS-Web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+directory "#{node['iis']['docroot']}/CMS-Prod-web" do
+  action :create
+end
+
+iis_pool 'CMS-Prod-web' do
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
+end
+
+iis_site 'CMS-Prod-web' do
+  protocol :http
+  port 9000
+  path "#{node['iis']['docroot']}/CMS-Prod-web"
+  application_pool 'CMS-Prod-web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/CMS-Prod-web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+directory "#{node['iis']['docroot']}/Subsidy-CSS-Web" do
+  action :create
+end
+
+iis_pool 'Subsidy-CSS-Web' do
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
+end
+
+iis_site 'Subsidy-CSS-Web' do
+  protocol :http
+  port 9070
+  path "#{node['iis']['docroot']}/Subsidy-CSS-Web"
+  application_pool 'Subsidy-CSS-Web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/Subsidy-CSS-Web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+directory "#{node['iis']['docroot']}/Subsidy-Prod-web" do
+  action :create
+end
+
+iis_pool 'Subsidy-Prod-web' do
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
+end
+
+iis_site 'Subsidy-Prod-web' do
+  protocol :http
+  port 9020
+  path "#{node['iis']['docroot']}/Subsidy-Prod-web"
+  application_pool 'Subsidy-Prod-web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/Subsidy-Prod-web/Default.htm" do
+  source 'default.htm.erb'
+end
+
+directory "#{node['iis']['docroot']}/TC-Prod-web" do
+  action :create
+end
+
+iis_pool 'TC-Prod-web' do
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
+end
+
+iis_site 'TC-Prod-web' do
+  protocol :http
+  port 9010
+  path "#{node['iis']['docroot']}/TC-Prod-web"
+  application_pool 'TC-Prod-web'
+  action [:add,:start]
+end
+
+template "#{node['iis']['docroot']}/TC-Prod-web/Default.htm" do
   source 'default.htm.erb'
 end
