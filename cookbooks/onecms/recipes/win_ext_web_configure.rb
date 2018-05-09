@@ -22,9 +22,9 @@ directory "#{node['iis']['docroot']}/CDN-Prod-web" do
 end
 
 iis_pool 'CDN-Prod-Web' do
-  runtime_version "2.0"
-  pipeline_mode :Classic
-  action :add
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
 end
 
 iis_site 'CDN-Prod-web' do
@@ -41,9 +41,9 @@ end
 
 
 iis_pool 'Login-Web' do
-  runtime_version "2.0"
-  pipeline_mode :Classic
-  action :add
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
 end
 
 directory "#{node['iis']['docroot']}/FCIL-Web" do
@@ -63,9 +63,9 @@ template "#{node['iis']['docroot']}/FCIL-Web/Default.htm" do
 end
 
 iis_pool 'ParentPortal-Prod-web' do
-  runtime_version "2.0"
-  pipeline_mode :Classic
-  action :add
+  runtime_version "4.0"
+  pipeline_mode :Integrated
+  action [:add,:start]
 end
 
 directory "#{node['iis']['docroot']}/ParentPortal-Prod-web" do
@@ -76,7 +76,7 @@ iis_site 'ParentPortal-Pro' do
   protocol :http
   port 9030
   path "#{node['iis']['docroot']}/ParentPortal-Prod-web"
-  application_pool ''
+  application_pool 'ParentPortal-Prod-web'
   action [:add,:start]
 end
 
