@@ -17,25 +17,25 @@ iis_site 'Default Web Site' do
   action [:stop, :delete]
 end
 
-directory "#{node['iis']['docroot']}/CDN-Prod-web" do
+directory "#{node['iis']['docroot']}/CDN-web" do
   action :create
 end
 
-iis_pool 'CDN-Prod-Web' do
+iis_pool 'CDN-Web' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action [:add,:start]
 end
 
-iis_site 'CDN-Prod-web' do
+iis_site 'CDN-web' do
   protocol :http
   port 9050
-  path "#{node['iis']['docroot']}/CDN-Prod-web"
-  application_pool 'CDN-Prod-Web'
+  path "#{node['iis']['docroot']}/CDN-web"
+  application_pool 'CDN-Web'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/CDN-Prod-web/Default.htm" do
+template "#{node['iis']['docroot']}/CDN-web/Default.htm" do
   source 'default.htm.erb'
 end
 
@@ -62,24 +62,24 @@ template "#{node['iis']['docroot']}/FCIL-Web/Default.htm" do
   source 'default.htm.erb'
 end
 
-iis_pool 'ParentPortal-Prod-web' do
+iis_pool 'ParentPortal-web' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action [:add,:start]
 end
 
-directory "#{node['iis']['docroot']}/ParentPortal-Prod-web" do
+directory "#{node['iis']['docroot']}/ParentPortal-web" do
   action :create
 end
 
 iis_site 'ParentPortal-Pro' do
   protocol :http
   port 9030
-  path "#{node['iis']['docroot']}/ParentPortal-Prod-web"
-  application_pool 'ParentPortal-Prod-web'
+  path "#{node['iis']['docroot']}/ParentPortal-web"
+  application_pool 'ParentPortal-web'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/ParentPortal-Prod-web/Default.htm" do
+template "#{node['iis']['docroot']}/ParentPortal-web/Default.htm" do
   source 'default.htm.erb'
 end

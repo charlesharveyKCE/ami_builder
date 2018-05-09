@@ -1,4 +1,4 @@
-# Cookbook:: OneCMS
+# Cookbook:: onecms
 # Recipe:: win_int_app_svr_configure
 #
 # Copyright:: 2018, Charles Harvey, All Rights Reserved.
@@ -17,178 +17,178 @@ iis_site 'Default Web Site' do
   action [:stop, :delete]
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-CSS-App" do
+directory "#{node['iis']['docroot']}/onecms-CSS-App" do
   action :create
 end
 
-iis_pool 'OneCMS-CSS-App' do
+iis_pool 'onecms-CSS-App' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-CSS-App' do
+iis_site 'onecms-CSS-App' do
   protocol :http
   port 9525
-  path "#{node['iis']['docroot']}/OneCMS-CSS-App"
-  application_pool 'OneCMS-CSS-App'
+  path "#{node['iis']['docroot']}/onecms-CSS-App"
+  application_pool 'onecms-CSS-App'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-CSS-App/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-CSS-App/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-CSS-Report" do
+directory "#{node['iis']['docroot']}/onecms-CSS-Report" do
   action :create
 end
 
-iis_pool 'OneCMS-CSS-Report' do
+iis_pool 'onecms-CSS-Report' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-CSS-Report' do
+iis_site 'onecms-CSS-Report' do
   protocol :http
   port 9625
-  path "#{node['iis']['docroot']}/OneCMS-CSS-Report"
-  application_pool 'OneCMS-CSS-Report'
+  path "#{node['iis']['docroot']}/onecms-CSS-Report"
+  application_pool 'onecms-CSS-Report'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-CSS-Report/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-CSS-Report/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-CSS-RESTApp" do
+directory "#{node['iis']['docroot']}/onecms-CSS-restapp" do
   action :create
 end
 
-iis_pool 'OneCMS-CSS-RESTApp' do
+iis_pool 'onecms-CSS-restapp' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-CSS-RESTApp' do
+iis_site 'onecms-CSS-restapp' do
   protocol :http
   port 9575
-  path "#{node['iis']['docroot']}/OneCMS-CSS-RESTApp"
-  application_pool 'OneCMS-CSS-RESTApp'
+  path "#{node['iis']['docroot']}/onecms-CSS-restapp"
+  application_pool 'onecms-CSS-restapp'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-CSS-RESTApp/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-CSS-restapp/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-Prod-App" do
+directory "#{node['iis']['docroot']}/onecms-App" do
   action :create
 end
 
-iis_pool 'OneCMS-Prod-App' do
+iis_pool 'onecms-App' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-Prod-App' do
+iis_site 'onecms-App' do
   protocol :http
   port 9500
-  path "#{node['iis']['docroot']}/OneCMS-Prod-App"
-  application_pool 'OneCMS-Prod-App'
+  path "#{node['iis']['docroot']}/onecms-App"
+  application_pool 'onecms-App'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-Prod-App/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-App/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-Prod-AppExt" do
+directory "#{node['iis']['docroot']}/onecms-AppExt" do
   action :create
 end
 
-iis_pool 'OneCMS-Prod-AppExt' do
+iis_pool 'onecms-AppExt' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-Prod-AppExt' do
+iis_site 'onecms-AppExt' do
   protocol :http
   port 9650
-  path "#{node['iis']['docroot']}/OneCMS-Prod-AppExt"
-  application_pool 'OneCMS-Prod-AppExt'
+  path "#{node['iis']['docroot']}/onecms-AppExt"
+  application_pool 'onecms-AppExt'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-Prod-AppExt/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-AppExt/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-Prod-AppExt" do
+directory "#{node['iis']['docroot']}/onecms-AppExt" do
   action :create
 end
 
-iis_pool 'OneCMS-Prod-AppExt' do
+iis_pool 'onecms-AppExt' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-Prod-AppExt' do
+iis_site 'onecms-AppExt' do
   protocol :http
   port 9650
-  path "#{node['iis']['docroot']}/OneCMS-Prod-AppExt"
-  application_pool 'OneCMS-Prod-AppExt'
+  path "#{node['iis']['docroot']}/onecms-AppExt"
+  application_pool 'onecms-AppExt'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-Prod-AppExt/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-AppExt/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-Prod-report" do
+directory "#{node['iis']['docroot']}/onecms-report" do
   action :create
 end
 
-iis_pool 'OneCMS-Prod-report' do
+iis_pool 'onecms-report' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-Prod-report' do
+iis_site 'onecms-report' do
   protocol :http
   port 9600
-  path "#{node['iis']['docroot']}/OneCMS-Prod-report"
-  application_pool 'OneCMS-Prod-report'
+  path "#{node['iis']['docroot']}/onecms-report"
+  application_pool 'onecms-report'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-Prod-report/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-report/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/OneCMS-Prod-RestApp" do
+directory "#{node['iis']['docroot']}/onecms-restapp" do
   action :create
 end
 
-iis_pool 'OneCMS-Prod-RestApp' do
+iis_pool 'onecms-restapp' do
   runtime_version "4.0"
   pipeline_mode :Integrated
   action :add
 end
 
-iis_site 'OneCMS-Prod-RestApp' do
+iis_site 'onecms-restapp' do
   protocol :http
   port 9550
-  path "#{node['iis']['docroot']}/OneCMS-Prod-RestApp"
-  application_pool 'OneCMS-Prod-RestApp'
+  path "#{node['iis']['docroot']}/onecms-restapp"
+  application_pool 'onecms-restapp'
   action [:add,:start]
 end
 
-template "#{node['iis']['docroot']}/OneCMS-Prod-RestApp/Default.htm" do
+template "#{node['iis']['docroot']}/onecms-restapp/Default.htm" do
   source 'default.htm.erb'
 end
