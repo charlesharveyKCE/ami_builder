@@ -22,8 +22,8 @@
             "inline": [
                 "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
                 "Install-Module -Name Chocolatey -force",
-                "Install-ChocolateySoftware -Verbose -force",
-                "choco --version"
+                "Install-ChocolateySoftware -Verbose",
+                "Get-ChocolateyVersion"
                 ],
             "elevated_user": "Administrator",
             "elevated_password": "{{.WinRMPassword}}"
