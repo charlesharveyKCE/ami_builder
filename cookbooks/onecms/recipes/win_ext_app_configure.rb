@@ -12,6 +12,15 @@ windows_service 'W3SVC' do
   action :enable
 end
 
+chocolatey_package 'vcredist-all' do
+  action :install
+end
+
+chocolatey_package 'logparser' do
+  action :install
+end
+
+
 template 'c:\inetpub\wwwroot\Default.htm' do
   source 'default.htm.erb'
 end

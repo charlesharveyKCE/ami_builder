@@ -12,6 +12,14 @@ windows_service 'W3SVC' do
   action :enable
 end
 
+chocolatey_package 'vcredist-all' do
+  action :install
+end
+
+chocolatey_package 'logparser' do
+  action :install
+end
+
 # stop and delete the default site
 iis_site 'Default Web Site' do
   action [:stop, :delete]
