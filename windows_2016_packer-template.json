@@ -18,6 +18,17 @@
     }],
     "provisioners": [
         {
+            "type": "powershell",
+            "inline": [
+                "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
+                "Install-Module -Name Chocolatey -force",
+                "Install-ChocolateySoftware -Verbose",
+                "Get-ChocolateyVersion"
+                ],
+            "elevated_user": "Administrator",
+            "elevated_password": "{{.WinRMPassword}}"
+        },
+        {
             "type": "chef-solo",
             "cookbook_paths": ["cookbooks"],
             "roles_path" : "roles",
@@ -35,3 +46,4 @@
         }
   ]
 }
+
