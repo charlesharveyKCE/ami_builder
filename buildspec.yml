@@ -4,6 +4,7 @@ version: 0.2
 env:
   variables:
     role: "onecms_ext_web"
+    osver: "full"
   
 
 phases:
@@ -20,7 +21,7 @@ phases:
       - aws configure set aws_secret_access_key `./jq -r '.SecretAccessKey' aws_credentials.json`
       - aws configure set aws_session_token `./jq -r '.Token' aws_credentials.json`
       - export PACKER_LOG=1
-      - ./packer build -var "role=$role" windows_2016_packer-template.json
+      - ./packer build -var "role=$role" windows_2016_$osver_packer-template.json
   post_build:
     commands:
       - echo "HashiCorp Packer build completed on `date`"

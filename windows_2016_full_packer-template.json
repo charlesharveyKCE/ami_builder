@@ -1,0 +1,52 @@
+
+{
+    "variables": {
+        "aws_region": "{{env `AWS_REGION`}}",
+        "role" : "onecms_int_web",
+        "osver": "full"
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "user_data_file": "./scripts/setup_winrm.ps1",
+        "region": "{{user `aws_region`}}",
+        "instance_type": "t2.micro",
+        "winrm_username": "Administrator",
+        "ami_name": "{{ user `role` }}_{{isotime \"2006_01_02_03_04_05\"}}",
+        "associate_public_ip_address" : true,
+        "communicator":"winrm",
+        "winrm_use_ssl": true,
+        "winrm_insecure": true,
+         "source_ami" : "ami-f3dcbc8b" 
+        
+    }],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "inline": [
+                "Install-PackageProvider -Name Nuget -ForceBootstrap -force",
+                "Install-Module -Name Chocolatey -force",
+                "Install-ChocolateySoftware -Verbose",
+                "Get-ChocolateyVersion"
+                ],
+            "elevated_user": "Administrator",
+            "elevated_password": "{{.WinRMPassword}}"
+        },
+        {
+            "type": "chef-solo",
+            "cookbook_paths": ["cookbooks"],
+            "roles_path" : "roles",
+            "guest_os_type": "windows",
+            "run_list": ["role[{{ user `role` }}]"]
+        },
+        {
+            "type": "powershell",
+            "inline": [
+                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+                "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
+                ],
+            "elevated_user": "Administrator",
+            "elevated_password": "{{.WinRMPassword}}"
+        }
+  ]
+}
+
