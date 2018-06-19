@@ -21,6 +21,8 @@ phases:
       - aws configure set aws_secret_access_key `./jq -r '.SecretAccessKey' aws_credentials.json`
       - aws configure set aws_session_token `./jq -r '.Token' aws_credentials.json`
       - export PACKER_LOG=1
+      - printenv osver
+      - printenv role
       - ./packer build -var "role=$role" -only=$osver "windows_packer-template.json"
   post_build:
     commands:
