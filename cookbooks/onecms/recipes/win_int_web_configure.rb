@@ -1,7 +1,7 @@
-# Cookbook:: OneCMS
 # Recipe:: win_int_web_svr_configure
 #
 # Copyright:: 2018, Charles Harvey, All Rights Reserved.
+include_recipe 'chocolatey::default'
 
 windows_feature_powershell ['NET-Framework-45-ASPNET', 'NET-Framework-45-Core', 'NET-Framework-45-Features', 'NET-Framework-Features', 'NET-WCF-Services45', 'NET-WCF-TCP-PortSharing45', 'Web-App-Dev', 'Web-Asp-Net', 'Web-Asp-Net45', 'Web-Common-Http', 'Web-Default-Doc', 'Web-Dir-Browsing', 'Web-Filtering', 'Web-Health', 'Web-Http-Errors', 'Web-Http-Logging', 'Web-ISAPI-Ext', 'Web-ISAPI-Filter', 'Web-Mgmt-Console', 'Web-Mgmt-Service', 'Web-Mgmt-Tools', 'Web-Net-Ext', 'Web-Net-Ext45', 'Web-Performance', 'Web-Scripting-Tools', 'Web-Security', 'Web-Server', 'Web-Stat-Compression', 'Web-Static-Content', 'Web-WebServer'] do
   action :install
@@ -29,9 +29,9 @@ directory "#{node['iis']['docroot']}/CDN-web" do
 end
 
 iis_pool 'CDN-Web' do
-  runtime_version "4.0"
+  runtime_version '4.0'
   pipeline_mode :Integrated
-  action [:add,:start]
+  action [:add, :start]
 end
 
 iis_site 'CDN-web' do
@@ -39,7 +39,7 @@ iis_site 'CDN-web' do
   port 9050
   path "#{node['iis']['docroot']}/CDN-web"
   application_pool 'CDN-Web'
-  action [:add,:start]
+  action [:add, :start]
 end
 
 template "#{node['iis']['docroot']}/CDN-web/Default.htm" do
@@ -51,9 +51,9 @@ directory "#{node['iis']['docroot']}/CMS-CSS-Web" do
 end
 
 iis_pool 'CMS-CSS-Web' do
-  runtime_version "4.0"
+  runtime_version '4.0'
   pipeline_mode :Integrated
-  action [:add,:start]
+  action [:add, :start]
 end
 
 iis_site 'CMS-CSS-Web' do
@@ -61,7 +61,7 @@ iis_site 'CMS-CSS-Web' do
   port 9060
   path "#{node['iis']['docroot']}/CMS-CSS-Web"
   application_pool 'CMS-CSS-Web'
-  action [:add,:start]
+  action [:add, :start]
 end
 
 template "#{node['iis']['docroot']}/CMS-CSS-Web/Default.htm" do
@@ -73,9 +73,9 @@ directory "#{node['iis']['docroot']}/CMS-web" do
 end
 
 iis_pool 'CMS-web' do
-  runtime_version "4.0"
+  runtime_version '4.0'
   pipeline_mode :Integrated
-  action [:add,:start]
+  action [:add, :start]
 end
 
 iis_site 'CMS-web' do
@@ -83,7 +83,7 @@ iis_site 'CMS-web' do
   port 9000
   path "#{node['iis']['docroot']}/CMS-web"
   application_pool 'CMS-web'
-  action [:add,:start]
+  action [:add, :start]
 end
 
 template "#{node['iis']['docroot']}/CMS-web/Default.htm" do
@@ -95,9 +95,9 @@ directory "#{node['iis']['docroot']}/Subsidy-CSS-Web" do
 end
 
 iis_pool 'Subsidy-CSS-Web' do
-  runtime_version "4.0"
+  runtime_version '4.0'
   pipeline_mode :Integrated
-  action [:add,:start]
+  action [:add, :start]
 end
 
 iis_site 'Subsidy-CSS-Web' do
@@ -105,7 +105,7 @@ iis_site 'Subsidy-CSS-Web' do
   port 9070
   path "#{node['iis']['docroot']}/Subsidy-CSS-Web"
   application_pool 'Subsidy-CSS-Web'
-  action [:add,:start]
+  action [:add, :start]
 end
 
 template "#{node['iis']['docroot']}/Subsidy-CSS-Web/Default.htm" do
@@ -117,9 +117,9 @@ directory "#{node['iis']['docroot']}/Subsidy-web" do
 end
 
 iis_pool 'Subsidy-web' do
-  runtime_version "4.0"
+  runtime_version '4.0'
   pipeline_mode :Integrated
-  action [:add,:start]
+  action [:add, :start]
 end
 
 iis_site 'Subsidy-web' do
@@ -127,7 +127,7 @@ iis_site 'Subsidy-web' do
   port 9020
   path "#{node['iis']['docroot']}/Subsidy-web"
   application_pool 'Subsidy-web'
-  action [:add,:start]
+  action [:add, :start]
 end
 
 template "#{node['iis']['docroot']}/Subsidy-web/Default.htm" do
@@ -139,9 +139,9 @@ directory "#{node['iis']['docroot']}/TC-web" do
 end
 
 iis_pool 'TC-web' do
-  runtime_version "4.0"
+  runtime_version '4.0'
   pipeline_mode :Integrated
-  action [:add,:start]
+  action [:add, :start]
 end
 
 iis_site 'TC-web' do
@@ -149,9 +149,64 @@ iis_site 'TC-web' do
   port 9010
   path "#{node['iis']['docroot']}/TC-web"
   application_pool 'TC-web'
-  action [:add,:start]
+  action [:add, :start]
 end
 
 template "#{node['iis']['docroot']}/TC-web/Default.htm" do
   source 'default.htm.erb'
+end
+
+windows_firewall_rule 'IIS-OneCMS-TC-web-In-TCP' do
+  rule_name 'IIS-OneCMS-TC-web-In-TCP'
+  description 'Allow OneCMS TC-web'
+  localport '9010'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+
+windows_firewall_rule 'IIS-OneCMS-Subsidy-web-In-TCP' do
+  rule_name 'IIS-OneCMS-Subsidy-web-In-TCP'
+  description 'Allow OneCMS Subsidy-web'
+  localport '9020'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-Subsidy-CSS-Web-In-TCP' do
+  rule_name 'IIS-OneCMS-Subsidy-CSS-Web-In-TCP'
+  description 'Allow OneCMS Subsidy-CSS-Web'
+  localport '9070'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-CMS-web-In-TCP' do
+  rule_name 'IIS-OneCMS-CMS-web-In-TCP'
+  description 'Allow OneCMS CMS-web'
+  localport '9000'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-CMS-CSS-Web-In-TCP' do
+  rule_name 'IIS-OneCMS-CMS-CSS-Web-In-TCP'
+  description 'Allow OneCMS CMS-CSS-Web'
+  localport '9060'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-CDN-web-In-TCP' do
+  rule_name 'IIS-OneCMS-CDN-web-In-TCP'
+  description 'Allow OneCMS CDN-web'
+  localport '9050'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
 end
