@@ -2,7 +2,8 @@
 {
     "variables": {
         "aws_region": "{{env `AWS_REGION`}}",
-        "role" : "onecms_int_web"
+        "role" : "{{env `role` }}",
+        "osver" : "{{env `osver` }}"
     },
     "builders": [{
         "type": "amazon-ebs",
