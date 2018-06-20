@@ -133,28 +133,6 @@ template "#{node['iis']['docroot']}/onecms-AppExt/Default.htm" do
   source 'default.htm.erb'
 end
 
-directory "#{node['iis']['docroot']}/onecms-AppExt" do
-  action :create
-end
-
-iis_pool 'onecms-AppExt' do
-  runtime_version '4.0'
-  pipeline_mode :Integrated
-  action :add
-end
-
-iis_site 'onecms-AppExt' do
-  protocol :http
-  port 9650
-  path "#{node['iis']['docroot']}/onecms-AppExt"
-  application_pool 'onecms-AppExt'
-  action [:add, :start]
-end
-
-template "#{node['iis']['docroot']}/onecms-AppExt/Default.htm" do
-  source 'default.htm.erb'
-end
-
 directory "#{node['iis']['docroot']}/onecms-report" do
   action :create
 end
@@ -198,3 +176,75 @@ end
 template "#{node['iis']['docroot']}/onecms-restapp/Default.htm" do
   source 'default.htm.erb'
 end
+
+
+windows_firewall_rule 'IIS-OneCMS-CSS-App-In-TCP' do
+  rule_name 'IIS-OneCMS-CSS-App-In-TCP'
+  description 'Allow OneCMS CSS-App'
+  localport '9525'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-CSS-Report-In-TCP' do
+  rule_name 'IIS-OneCMS-CSS-Report-In-TCP'
+  description 'Allow OneCMS CSS-Report'
+  localport '9625'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-CSS-restapp-In-TCP' do
+  rule_name 'IIS-OneCMS-CSS-restapp-In-TCP'
+  description 'Allow OneCMS CSS-restapp'
+  localport '9575'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-App-In-TCP' do
+  rule_name 'IIS-OneCMS-App-In-TCP'
+  description 'Allow OneCMS App'
+  localport '9500'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-AppExt-In-TCP' do
+  rule_name 'IIS-OneCMS-AppExt-In-TCP'
+  description 'Allow OneCMS AppExt'
+  localport '9650'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-report-In-TCP' do
+  rule_name 'IIS-OneCMS-report-In-TCP'
+  description 'Allow OneCMS report'
+  localport '9600'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+windows_firewall_rule 'IIS-OneCMS-restapp-In-TCP' do
+  rule_name 'IIS-OneCMS-restapp-In-TCP'
+  description 'Allow OneCMS restapp'
+  localport '9550'
+  protocol 'TCP'
+  firewall_action :allow
+  profile :any
+end
+
+
+
+
+
+
+
+
